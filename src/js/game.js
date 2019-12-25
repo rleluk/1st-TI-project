@@ -1,12 +1,12 @@
 class Block {
-    static nr = 0;
-    constructor(width, height) {
+    constructor(width, height, nr) {
         this.height = height;
         this.width = width;
         this.x = 0;
         this.y = 0;
         this.rgb = random_rgba();
         this.active = false;
+        this.nrOfBlock = nr;
     }
 
     isActive = () => this.active;
@@ -17,6 +17,10 @@ class Block {
         this.x = coordinates.x;
         this.y = coordinates.y;
     }
+
+    getNoB = () => this.nrOfBlock;
+
+    isInside = mousePos => (mousePos.x >= this.x && mousePos.x <= this.x + this.width && mousePos.y >= this.y && mousePos.y <= this.y + this.height) ? true : false;
 
     draw(ctx, radius = 10) {
         ctx.beginPath();
@@ -35,19 +39,13 @@ class Block {
         ctx.fill();
         ctx.stroke();
     }
-
-    isInside(mousePos) {
-        if(mousePos.x >= this.x && mousePos.x <= this.x + this.width && mousePos.y >= this.y && mousePos.y <= this.y + this.height) return true;
-        else return false;
-    }
 };
 
 class Pole {
-    static width;
+    static width = 240;
     static nr = 0;
     
-    constructor(canvas) {
-        Pole.width = canvas.width / 3;
+    constructor() {
         this.nr = Pole.nr++;
         this.xStart = Pole.width * this.nr; 
         this.xEnd = Pole.width * (this.nr + 1);
@@ -71,40 +69,39 @@ class Pole {
         return this.blocks.pop();
     }
 
-    isInside(x) {
-        if(x >= this.xStart && x <= this.xEnd) return true;
-        else return false;
+    getLastBlock = () => this.blocks.slice(-1)[0];
+
+    isInside = x => (x >= this.xStart && x <= this.xEnd) ? true : false;
+
+    drawBlocks(ctx, blockToSkip = null) {
+        this.blocks.forEach(block => {
+            if(block !== blockToSkip)     
+                block.draw(ctx);
+        });
     }
 }
 
 ////////////////////////////////// DRAWING BOARD //////////////////////////////////
 
-function drawBlocks(ctx, blocks, blockToSkip = null) {
-    blocks.forEach(element => {
-        if(element !== blockToSkip)     
-            element.draw(ctx);
-    });
-}
-
-function drawPoles(ctx, bgImg, poles, blockToSkip = null) {
-    ctx.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
-    poles.forEach(element => drawBlocks(ctx, element.blocks, blockToSkip));
-}
-
 var canvas = document.getElementById("gameCanvas");
 var ctx = canvas.getContext("2d");
 var bgImg = document.getElementById("source");
 
+function drawBoard(ctx, bgImg, poles, blockToSkip = null) {
+    ctx.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
+    poles.forEach(pole => pole.drawBlocks(ctx, blockToSkip));
+}
+
 var poles = [];
 for(let i = 0; i < 3; i++) 
-    poles[i] = new Pole(canvas);
+    poles[i] = new Pole();
 
 var nob = 4;
 for(let i = nob; i > 0; i--)
-    poles[0].add(new Block(i * 25, 20));
+    poles[0].add(new Block(i * 25, 20, i));
 
 bgImg.addEventListener('load', event => {
-    drawPoles(ctx, bgImg, poles);
+    drawBoard(ctx, bgImg, poles);
 });   
 
 ////////////////////////////////// MOUSE EVENTS //////////////////////////////////
@@ -112,32 +109,21 @@ bgImg.addEventListener('load', event => {
 var mouseIsDown = false;
 var blockToMove = null;
 var dist;
+var poleOrigin = null;
 
 canvas.onmousedown = event => {
     mouseIsDown = true;
     let mousePos = getMousePos(canvas, event);
-    let blocks = [...poles[0].blocks, ...poles[1].blocks, ...poles[2].blocks];
-    // for(let element of blocks) {
-    //     if(element.isInside(mousePos) && element.isActive()) {
-    //         blockToMove = element;
-    //         dist = {
-    //             x: mousePos.x - blockToMove.x,
-    //             y: mousePos.y - blockToMove.y
-    //         }
-    //         break;
-    //     }
-    // }
     for(let pole of poles) {
-        for(let block of pole.blocks) {
-            if(block.isInside(mousePos) && block.isActive()) {
-                blockToMove = block;
-                dist = {
-                    x: mousePos.x - blockToMove.x,
-                    y: mousePos.y - blockToMove.y
-                }
-                pole.remove();
-                return;
+        let lastBlock = pole.getLastBlock();
+        if(lastBlock && lastBlock.isInside(mousePos) && lastBlock.isActive()) {
+            poleOrigin = pole;
+            blockToMove = pole.remove();
+            dist = {
+                x: mousePos.x - blockToMove.x,
+                y: mousePos.y - blockToMove.y
             }
+            break;
         }
     }
 }
@@ -145,13 +131,18 @@ canvas.onmousedown = event => {
 canvas.onmouseup = event => {
     mouseIsDown = false;
     let mousePos = getMousePos(canvas, event);
-    for(let pole of poles) {
-        if(pole.isInside(mousePos.x) && blockToMove) {
-            pole.add(blockToMove);
+    if(blockToMove) {
+        for(let pole of poles) {
+            let lastBlock = pole.getLastBlock();
+            if(pole.isInside(mousePos.x)) {
+                if(!lastBlock || blockToMove.getNoB() < lastBlock.getNoB())
+                  pole.add(blockToMove);
+                else poleOrigin.add(blockToMove);
+            }
         }
-    }
+    } 
     blockToMove = null;
-    drawPoles(ctx, bgImg, poles);
+    drawBoard(ctx, bgImg, poles);
 }
 
 canvas.onmousemove = event => {
@@ -162,7 +153,7 @@ canvas.onmousemove = event => {
             y: mousePos.y - dist.y
         }
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        drawPoles(ctx, bgImg, poles, blockToMove);
+        drawBoard(ctx, bgImg, poles, blockToMove);
         blockToMove.setCoordinates(newPos);
         blockToMove.draw(ctx);
     }
