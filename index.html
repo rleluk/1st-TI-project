@@ -2,17 +2,42 @@
 <html lang="pl">
     <head>
         <meta charset="utf-8">
+        <link href="https://fonts.googleapis.com/css?family=Bangers|Baskervville&display=swap" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="./src/css/main.css">
         <script src="./src/js/utils.js"></script>
     </head>
     <body>
-        <div style="display:none;">
-            <img id="source"
-                 src="./img/board.png"
-                 width="720" height="400">
-        </div>    
-        <canvas id="gameCanvas" width="720" height="400">
-        </canvas>
-        <script src="./src/js/game.js"></script>
+        <header>
+            <div style="display:none;">
+                <img id="source"
+                     src="./img/board.png"
+                     width="720" height="400">
+            </div>  
+            <div class="header-title">
+                <h1>Wieże Hanoi</h1>
+            </div>
+            <nav class="header-nav">
+                <ul>
+                    <li>
+                        <p> 
+                            Coś tam
+                        </p>
+                    </li>
+                    <li> 
+                        <p>
+                            Gra
+                        </p>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+        <article>
+            <canvas id="gameCanvas" width="720" height="400">
+            </canvas>
+            <script src="./src/js/game.js"></script>
+        </article>
+        <footer>
+            <p>2019 &copy; Wszelkie prawa zastrzeżone.</p>
+        </footer>
     </body>
 </html>

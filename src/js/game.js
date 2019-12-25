@@ -1,3 +1,5 @@
+const areaWidth = 240;
+
 class Block {
     constructor(width, height, nr) {
         this.height = height;
@@ -42,13 +44,10 @@ class Block {
 };
 
 class Pole {
-    static width = 240;
-    static nr = 0;
-    
-    constructor() {
-        this.nr = Pole.nr++;
-        this.xStart = Pole.width * this.nr; 
-        this.xEnd = Pole.width * (this.nr + 1);
+    constructor(nr) {
+        this.nr = nr;
+        this.xStart = areaWidth * this.nr; 
+        this.xEnd = areaWidth * (this.nr + 1);
         this.center = this.xStart + (this.xEnd - this.xStart) / 2;
         this.blocks = [];
     }
@@ -94,7 +93,7 @@ function drawBoard(ctx, bgImg, poles, blockToSkip = null) {
 
 var poles = [];
 for(let i = 0; i < 3; i++) 
-    poles[i] = new Pole();
+    poles[i] = new Pole(i);
 
 var nob = 4;
 for(let i = nob; i > 0; i--)
