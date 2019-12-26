@@ -2,42 +2,60 @@
 <html lang="pl">
     <head>
         <meta charset="utf-8">
-        <link href="https://fonts.googleapis.com/css?family=Bangers|Baskervville&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Bangers&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=McLaren&display=swap" rel="stylesheet"> 
         <link rel="stylesheet" type="text/css" href="./src/css/main.css">
         <script src="./src/js/utils.js"></script>
+        <script src="./src/js/main.js"></script>
     </head>
-    <body>
+    <body onload="init()">
         <header>
-            <div style="display:none;">
-                <img id="source"
-                     src="./img/board.png"
-                     width="720" height="400">
-            </div>  
-            <div class="header-title">
+            <div id="homePageNav" class="header-title content-nav">
                 <h1>Wieże Hanoi</h1>
             </div>
             <nav class="header-nav">
                 <ul>
-                    <li>
-                        <p> 
-                            Coś tam
-                        </p>
+                    <li id="algorithmNav" class="content-nav">
+                        <p>Algorytm</p>
                     </li>
-                    <li> 
-                        <p>
-                            Gra
-                        </p>
+                    <li id="gameNav" class="content-nav"> 
+                        <p>Gra</p>
                     </li>
                 </ul>
             </nav>
         </header>
-        <article>
-            <canvas id="gameCanvas" width="720" height="400">
-            </canvas>
-            <script src="./src/js/game.js"></script>
+
+        <article id="homePageContainer" class="content-container">
+            HOME PAGE
         </article>
+
+        <article id="algorithmContainer" class="content-container invisible">
+            ALGORITHM
+        </article>
+
+        <article id="gameContainer" class="content-container invisible">
+            <div style="display:none;">
+                <img id="source" src="./img/board.png" width="720" height="400">
+            </div>  
+            <canvas id="gameCanvas" width="720" height="400"></canvas> <br>
+            <div class="game-tools">
+                <select id="numberOfBlocks" class="select-nob">
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                </select> 
+                <div class="reset-button" onclick="resetBoard()"> &#x21bb </div>
+            </div>
+        </article>
+
         <footer>
             <p>2019 &copy; Wszelkie prawa zastrzeżone.</p>
         </footer>
+
+        <script src="./src/js/game.js"></script>
     </body>
 </html>

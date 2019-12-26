@@ -82,26 +82,35 @@ class Pole {
 
 ////////////////////////////////// DRAWING BOARD //////////////////////////////////
 
-var canvas = document.getElementById("gameCanvas");
-var ctx = canvas.getContext("2d");
-var bgImg = document.getElementById("source");
-
 function drawBoard(ctx, bgImg, poles, blockToSkip = null) {
     ctx.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
     poles.forEach(pole => pole.drawBlocks(ctx, blockToSkip));
 }
 
-var poles = [];
-for(let i = 0; i < 3; i++) 
-    poles[i] = new Pole(i);
+function createBoardElements(nob) {
+    let poles = [];
+    for(let i = 0; i < 3; i++) 
+        poles[i] = new Pole(i);
+    for(let i = nob; i > 0; i--)
+        poles[0].add(new Block(i * 25, 20, i));
+    return poles;
+}
 
-var nob = 4;
-for(let i = nob; i > 0; i--)
-    poles[0].add(new Block(i * 25, 20, i));
+var canvas = document.getElementById("gameCanvas");
+var ctx = canvas.getContext("2d");
+var bgImg = document.getElementById("source");
+var nob = document.getElementById("numberOfBlocks").value;
+var poles = createBoardElements(nob);
 
 bgImg.addEventListener('load', event => {
     drawBoard(ctx, bgImg, poles);
 });   
+
+function resetBoard() {
+    nob = document.getElementById("numberOfBlocks").value;
+    poles = createBoardElements(nob);
+    drawBoard(ctx, bgImg, poles);
+}
 
 ////////////////////////////////// MOUSE EVENTS //////////////////////////////////
 

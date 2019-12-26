@@ -1,26 +1,35 @@
 body, html {
     margin: 0 auto;
-    font-family: 'Baskervville', serif;
+    font-family: 'McLaren', cursive;
     width: 100%;
     height: 100%;
     padding: 0px;
+    text-align: center;
+    background-image: linear-gradient(180deg, #222930, #000011);
 }
 
 article {
+    margin: 0 auto;
+    width: 70%;
+    min-height: calc(100% - 150px);
+    background-image: linear-gradient(180deg, #803e00, #871101);
     padding-top: 150px;
     text-align: center;
-}
-
-ul {
-    list-style-type: none;
+    box-shadow: 0 0 8px #000;
 }
 
 header {
+    margin: 0 auto;
     font-family: 'Bangers', cursive;
-    background-color: #098;
-    width: 100%;
+    background-color: #871101;
+    width: 80%;
     height: 100px;
     position: fixed;
+    left: 50%;
+    margin-left: -40%;
+    filter: drop-shadow(0 0 8px #000);
+    border-bottom-left-radius: 50px 50px;
+    border-bottom-right-radius: 50px 50px;
 }
 
 header nav ul li {
@@ -38,9 +47,16 @@ header nav ul li:hover {
 
 .header-title {
     font-size: 24px;
-    color: #000;
     float: left;
-    padding: 5px 100px 5px 10%;
+    margin-left: 10%;
+}
+
+.header-title h1 {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 10px;
 }
 
 .header-title:hover {
@@ -50,28 +66,74 @@ header nav ul li:hover {
 .header-nav {
     color: #000;
     float: right;
-    padding-right: 10%;
+    margin-right: 10%;
+}
+
+ul {
+    list-style-type: none;
 }
 
 footer {
     text-align: center;
     height: 40px;
     width: 100%;
-    position: fixed;
+    position: absolute;
     bottom: 0px;
 }
 
 footer p {
     display: block;
     position: absolute;
-    font-size: 16px;
-    color: #fff;
-    background-color: #000;
+    font-size: 18px;
     bottom: 0px;
     left: 0px;
     right: 0px;
     margin: auto;
     width: 30%;
-    border-top-left-radius: 20px 20px;
-    border-top-right-radius: 20px 20px;
-} 
+}
+
+.invisible {
+    display: none;
+}
+
+canvas {
+    border: 3px solid #000;
+    border-radius: 5px;
+}
+
+.game-tools {
+    margin-top: 50px;
+}
+
+.select-nob {
+    display: block;
+    margin: 0 auto;
+    padding: 5px;
+    background-color: #222930;
+    cursor: pointer;
+    color: #ebc934;
+    height: 30px;
+    width: 50px;
+}
+
+select {
+    font-size: 16px;
+    border: 0;
+    border-radius: 5px;
+    -webkit-appearance: none;
+}
+
+.reset-button {
+    display: block;
+    margin: 0 auto;
+    cursor: pointer;
+    font-size: 50px;
+    margin-top: 20px;
+    height: 30px;
+    width: 50px;
+}
+
+.reset-button:hover {
+    color: #ebc934;
+}
+
