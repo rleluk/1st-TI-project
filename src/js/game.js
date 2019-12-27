@@ -72,6 +72,8 @@ class Pole {
 
     isInside = x => (x >= this.xStart && x <= this.xEnd) ? true : false;
 
+    getSize = () => this.blocks.length;
+
     drawBlocks(ctx, blockToSkip = null) {
         this.blocks.forEach(block => {
             if(block !== blockToSkip)     
@@ -106,18 +108,20 @@ bgImg.addEventListener('load', event => {
     drawBoard(ctx, bgImg, poles);
 });   
 
-function resetBoard() {
-    nob = document.getElementById("numberOfBlocks").value;
-    poles = createBoardElements(nob);
-    drawBoard(ctx, bgImg, poles);
-}
-
 ////////////////////////////////// MOUSE EVENTS //////////////////////////////////
 
 var mouseIsDown = false;
 var blockToMove = null;
 var dist;
 var poleOrigin = null;
+var countMoves = 0;
+
+function resetBoard() {
+    nob = document.getElementById("numberOfBlocks").value;
+    poles = createBoardElements(nob);
+    countMoves = 0;
+    drawBoard(ctx, bgImg, poles);
+}
 
 canvas.onmousedown = event => {
     mouseIsDown = true;
@@ -143,8 +147,16 @@ canvas.onmouseup = event => {
         for(let pole of poles) {
             let lastBlock = pole.getLastBlock();
             if(pole.isInside(mousePos.x)) {
-                if(!lastBlock || blockToMove.getNoB() < lastBlock.getNoB())
-                  pole.add(blockToMove);
+                if(!lastBlock || blockToMove.getNoB() < lastBlock.getNoB()) {
+                    pole.add(blockToMove);
+                    countMoves++;
+                    if(pole !== poles[0] && pole.getSize() == nob) {
+                        setTimeout(() => { 
+                            alert(`Gratulacje! Udało Ci się przenieść wszystkie krążki w ${countMoves} ruchach!`);
+                            resetBoard();
+                        }, 200);
+                    }
+                }
                 else poleOrigin.add(blockToMove);
             }
         }

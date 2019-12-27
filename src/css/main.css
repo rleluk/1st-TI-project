@@ -6,15 +6,16 @@ body, html {
     padding: 0px;
     text-align: center;
     background-image: linear-gradient(180deg, #222930, #000011);
+    background-attachment: fixed; /* repairs gradient */
 }
 
 article {
+    font-size: 20px;
     margin: 0 auto;
     width: 70%;
-    min-height: calc(100% - 150px);
+    min-height: calc(100% - 200px);
     background-image: linear-gradient(180deg, #803e00, #871101);
     padding-top: 150px;
-    text-align: center;
     box-shadow: 0 0 8px #000;
 }
 
@@ -74,10 +75,12 @@ ul {
 }
 
 footer {
+    background-color: #871101;
+    margin: 0 auto;
     text-align: center;
-    height: 40px;
-    width: 100%;
-    position: absolute;
+    height: 50px;
+    width: 70%;
+    position: relative;
     bottom: 0px;
 }
 
@@ -92,13 +95,10 @@ footer p {
     width: 30%;
 }
 
-.invisible {
-    display: none;
-}
-
-canvas {
+#gameCanvas {
     border: 3px solid #000;
     border-radius: 5px;
+    margin-top: 50px;
 }
 
 .game-tools {
@@ -137,3 +137,24 @@ select {
     color: #ebc934;
 }
 
+.article-content {
+    text-align: justify;
+    padding: 5%;
+}
+
+sup {
+    vertical-align: super;
+    font-size: 12px;
+}
+
+span {
+    color: #ebc934;
+}
+
+.invisible {
+    display: none;
+}
+
+.center {
+    text-align: center;
+}

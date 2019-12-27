@@ -26,17 +26,73 @@
         </header>
 
         <article id="homePageContainer" class="content-container">
-            HOME PAGE
+            <section class="article-content">
+                <p>
+                    Wieże Hanoi – problem polegający na odbudowaniu, z zachowaniem kształtu, wieży z krążków o różnych średnicach (popularna dziecięca zabawka), 
+                    przy czym podczas przekładania wolno się posługiwać buforem (reprezentowanym w tym przypadku przez dodatkowy słupek), 
+                    jednak przy ogólnym założeniu, że nie wolno kłaść krążka o większej średnicy na mniejszy ani przekładać kilku krążków jednocześnie. 
+                    Jest to przykład zadania, którego złożoność obliczeniowa wzrasta niezwykle szybko w miarę zwiększania parametru wejściowego, tj. liczby elementów wieży.
+                </p>
+                <p>
+                    Zagadka wież Hanoi powstała prawdopodobnie w Azji Wschodniej w XIX wieku lub wcześniej. Krążki były ceramiczne, produkowane w Chinach, Japonii i Wietnamie. 
+                    Gra ta została sprowadzona na Zachód po raz pierwszy przez francuskiego matematyka Édouarda Lucasa w 1883 roku. 
+                    Do sprzedawanego zestawu dołączona była tybetańska legenda, według której mnisi w świątyni Brahmy rozwiązują tę łamigłówkę dla 64 złotych krążków. 
+                    Legenda mówi, że gdy mnisi zakończą zadanie, nastąpi koniec świata. 
+                    Zakładając, że wykonują 1 ruch na sekundę, ułożenie wieży zajmie 2<sup>64</sup> −1 = 18 446 744 073 709 551 615 (blisko 18 i pół tryliona) sekund, czyli około 584 miliardów lat. 
+                    Dla porównania: Wszechświat ma około 13,7 mld lat.
+                </p>
+                <p>
+                    Mimo swojego wieku łamigłówka jest stale tematem prac matematyków i znane są jej bardziej rozbudowane wersje np. z więcej niż trzema słupkami.
+                    W psychologii łamigłówka ta jest jednym z testów na kojarzenie.
+                </p>
+            </section>
         </article>
 
         <article id="algorithmContainer" class="content-container invisible">
-            ALGORITHM
+            <section class="article-content">
+                <p>
+                    Wieże Hanoi można łatwo rozwiązać za pomocą prostego algorytmu rekurencyjnego lub iteracyjnego. <br>
+                    Kolejne słupki oznaczamy literami A, B i C, natomiast liczbę krążków oznaczamy literą n.
+                </p>
+                <p>
+                    Algorytm rekurencyjny składa się z następujących kroków:
+                    <ol>
+                        <li>Przenieś rekurencyjnie n - 1 krążków ze słupka A na słupek B posługując się słupkiem C.</li>
+                        <li>Przenieś jeden krążek ze słupka A na słupek C.</li>
+                        <li>Przenieś rekurencyjnie n - 1 krążków ze słupka B na słupek C posługując się słupkiem A. </li>
+                    </ol>
+                </p>
+                <p>
+                    Można powyższe kroki zapisać w pseudokodzie jako: <br>
+                    1. &nbsp;<span>Hanoi</span>(n, A, B, C) <br>
+                    2. &nbsp;&ensp;&ensp;<span>if</span> n > 0 <br>
+                    3. &nbsp;&ensp;&ensp;&ensp;&ensp;<span>Hanoi</span> (n - 1, A, C, B) <br>
+                    4. &nbsp;&ensp;&ensp;&ensp;&ensp;<span>put</span> block <span>from</span> pole A <span>on</span> pole C <br>
+                    5. &nbsp;&ensp;&ensp;&ensp;&ensp;<span>Hanoi</span> (n - 1, B, A, C) <br>
+                    6. &nbsp;&ensp;&ensp;<span>end if</span> <br>
+                </p>
+                <p>
+                    Rozwiązanie iteracyjne składa się z następujących kroków: <br>
+                    <ol>
+                        <li>Przenieś najmniejszy krążek na kolejny słupek.</li>
+                        <li>Wykonaj jedyny możliwy do wykonania ruch, nie zmieniając położenia krążka najmniejszego.</li>
+                        <li>Powtarzaj punkty 1 i 2, aż do odpowiedniego ułożenia wszystkich krążków.</li>
+                    </ol>
+                    Kolejny słupek wyznaczamy w zależności od liczby krążków. Jeśli liczba krążków jest parzysta, 
+                    kolejnym słupkiem jest ten po prawej stronie (gdy dojdziemy do słupka C w następnym ruchu używamy słupka A). 
+                    Natomiast jeśli liczba krążków jest nieparzysta, kolejnym słupkiem jest ten po lewej stronie (gdy dojdziemy do słupka A w następnym ruchu używamy słupka C).
+                </p>
+                <p>
+                    Najmniejsza liczba ruchów wymaganych do rozwiązania problemu wynosi <span>2 <sup>n</sup> - 1</span>. <br>
+                </p>
+            </section>
         </article>
 
         <article id="gameContainer" class="content-container invisible">
             <div style="display:none;">
                 <img id="source" src="./img/board.png" width="720" height="400">
-            </div>  
+            </div> 
+            <span>Przenieś wszystkie krążki na środkowy lub ostatni słupek.</span> <br>
             <canvas id="gameCanvas" width="720" height="400"></canvas> <br>
             <div class="game-tools">
                 <select id="numberOfBlocks" class="select-nob">
