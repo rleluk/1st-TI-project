@@ -1,5 +1,3 @@
-const areaWidth = 240;
-
 class Block {
     constructor(width, height, nr) {
         this.height = height;
@@ -10,7 +8,6 @@ class Block {
         this.active = false;
         this.nrOfBlock = nr;
     }
-
 
     isActive = () => this.active;
     
@@ -23,9 +20,9 @@ class Block {
 
     getNoB = () => this.nrOfBlock;
 
-    isInside = mousePos => (mousePos.x >= this.x && mousePos.x <= this.x + this.width && mousePos.y >= this.y && mousePos.y <= this.y + this.height) ? true : false;
+    isInside = (mousePos) => (mousePos.x >= this.x && mousePos.x <= this.x + this.width && mousePos.y >= this.y && mousePos.y <= this.y + this.height) ? true : false;
 
-    draw(ctx, radius = 10) {
+    draw(radius = 10) {
         ctx.beginPath();
         ctx.moveTo(this.x + radius, this.y);
         ctx.lineTo(this.x + this.width - radius, this.y);
@@ -71,23 +68,23 @@ class Pole {
 
     getLastBlock = () => this.blocks.slice(-1)[0];
 
-    isInside = x => (x >= this.xStart && x <= this.xEnd) ? true : false;
+    isInside = (x) => (x >= this.xStart && x <= this.xEnd) ? true : false;
 
     getSize = () => this.blocks.length;
 
-    drawBlocks(ctx, blockToSkip = null) {
+    drawBlocks(blockToSkip = null) {
         this.blocks.forEach(block => {
             if(block !== blockToSkip)     
-                block.draw(ctx);
+                block.draw();
         });
     }
 }
 
 ////////////////////////////////// DRAWING BOARD //////////////////////////////////
 
-function drawBoard(ctx, bgImg, poles, blockToSkip = null) {
+function drawBoard(blockToSkip = null) {
     ctx.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
-    poles.forEach(pole => pole.drawBlocks(ctx, blockToSkip));
+    poles.forEach(pole => pole.drawBlocks(blockToSkip));
 }
 
 function createBoardElements(nob) {
@@ -99,32 +96,16 @@ function createBoardElements(nob) {
     return poles;
 }
 
-var canvas = document.getElementById("gameCanvas");
-var ctx = canvas.getContext("2d");
-var bgImg = document.getElementById("source");
-var nob = document.getElementById("numberOfBlocks").value;
-var poles = createBoardElements(nob);
-
-bgImg.addEventListener('load', event => {
-    drawBoard(ctx, bgImg, poles);
-});   
-
-////////////////////////////////// MOUSE EVENTS //////////////////////////////////
-
-var mouseIsDown = false;
-var blockToMove = null;
-var dist;
-var poleOrigin = null;
-var countMoves = 0;
-
 function resetBoard() {
     nob = document.getElementById("numberOfBlocks").value;
     poles = createBoardElements(nob);
     countMoves = 0;
-    drawBoard(ctx, bgImg, poles);
+    drawBoard();
 }
 
-canvas.onmousedown = event => {
+////////////////////////////////// MOUSE EVENTS //////////////////////////////////
+
+function onMouseDown() {
     mouseIsDown = true;
     let mousePos = getMousePos(canvas, event);
     for(let pole of poles) {
@@ -141,7 +122,7 @@ canvas.onmousedown = event => {
     }
 }
 
-canvas.onmouseup = event => {
+function onMouseUp() {
     mouseIsDown = false;
     let mousePos = getMousePos(canvas, event);
     if(blockToMove) {
@@ -163,10 +144,10 @@ canvas.onmouseup = event => {
         }
     } 
     blockToMove = null;
-    drawBoard(ctx, bgImg, poles);
+    drawBoard();
 }
 
-canvas.onmousemove = event => {
+function onMouseMove() {
     if(mouseIsDown && blockToMove) {
         let mousePos = getMousePos(canvas, event);
         let newPos = {
@@ -174,8 +155,8 @@ canvas.onmousemove = event => {
             y: mousePos.y - dist.y
         }
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        drawBoard(ctx, bgImg, poles, blockToMove);
+        drawBoard(blockToMove);
         blockToMove.setCoordinates(newPos);
-        blockToMove.draw(ctx);
+        blockToMove.draw();
     }
 }
