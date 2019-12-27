@@ -11,6 +11,7 @@ class Block {
         this.nrOfBlock = nr;
     }
 
+
     isActive = () => this.active;
     
     setActive = (act) => this.active = act;
@@ -57,7 +58,7 @@ class Pole {
         let last = this.blocks[length - 1];
         if(last) last.setActive(false);
         block.setActive(true);
-        block.setCoordinates({x: this.center - block.width / 2 - (this.nr * 10 - 10), y: 360 - (length + 1) * 20}); // ??
+        block.setCoordinates({x: this.center - block.width / 2 - (this.nr * 10 - 10), y: 360 - (length + 1) * 20}); 
         this.blocks.push(block);
     }
 

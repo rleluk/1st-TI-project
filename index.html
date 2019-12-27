@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="pl">
     <head>
+        <title>Wieże Hanoi</title>
         <meta charset="utf-8">
         <link href="https://fonts.googleapis.com/css?family=Bangers&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=McLaren&display=swap" rel="stylesheet"> 
@@ -26,9 +27,10 @@
         </header>
 
         <article id="homePageContainer" class="content-container">
-            <section class="article-content">
+            <div class="article-content">
+                <h2 class="center">Wieże Hanoi</h2>
                 <p>
-                    Wieże Hanoi – problem polegający na odbudowaniu, z zachowaniem kształtu, wieży z krążków o różnych średnicach (popularna dziecięca zabawka), 
+                    Jest to problem polegający na odbudowaniu, z zachowaniem kształtu, wieży z krążków o różnych średnicach (popularna dziecięca zabawka), 
                     przy czym podczas przekładania wolno się posługiwać buforem (reprezentowanym w tym przypadku przez dodatkowy słupek), 
                     jednak przy ogólnym założeniu, że nie wolno kłaść krążka o większej średnicy na mniejszy ani przekładać kilku krążków jednocześnie. 
                     Jest to przykład zadania, którego złożoność obliczeniowa wzrasta niezwykle szybko w miarę zwiększania parametru wejściowego, tj. liczby elementów wieży.
@@ -45,25 +47,26 @@
                     Mimo swojego wieku łamigłówka jest stale tematem prac matematyków i znane są jej bardziej rozbudowane wersje np. z więcej niż trzema słupkami.
                     W psychologii łamigłówka ta jest jednym z testów na kojarzenie.
                 </p>
-            </section>
+            </div>
         </article>
 
         <article id="algorithmContainer" class="content-container invisible">
-            <section class="article-content">
+            <div class="article-content">
+                <h2 class="center">Algorytmy służące rozwiązaniu problemu</h2>
                 <p>
                     Wieże Hanoi można łatwo rozwiązać za pomocą prostego algorytmu rekurencyjnego lub iteracyjnego. <br>
                     Kolejne słupki oznaczamy literami A, B i C, natomiast liczbę krążków oznaczamy literą n.
                 </p>
                 <p>
-                    Algorytm rekurencyjny składa się z następujących kroków:
-                    <ol>
-                        <li>Przenieś rekurencyjnie n - 1 krążków ze słupka A na słupek B posługując się słupkiem C.</li>
-                        <li>Przenieś jeden krążek ze słupka A na słupek C.</li>
-                        <li>Przenieś rekurencyjnie n - 1 krążków ze słupka B na słupek C posługując się słupkiem A. </li>
-                    </ol>
+                    <span>Algorytm rekurencyjny</span> składa się z następujących kroków:
                 </p>
+                <ol>
+                    <li>Przenieś rekurencyjnie n - 1 krążków ze słupka A na słupek B posługując się słupkiem C.</li>
+                    <li>Przenieś jeden krążek ze słupka A na słupek C.</li>
+                    <li>Przenieś rekurencyjnie n - 1 krążków ze słupka B na słupek C posługując się słupkiem A. </li>
+                </ol>
                 <p>
-                    Można powyższe kroki zapisać w pseudokodzie jako: <br>
+                    Można powyższe kroki zapisać w postaci pseudokodu jako: <br>
                     1. &nbsp;<span>Hanoi</span>(n, A, B, C) <br>
                     2. &nbsp;&ensp;&ensp;<span>if</span> n > 0 <br>
                     3. &nbsp;&ensp;&ensp;&ensp;&ensp;<span>Hanoi</span> (n - 1, A, C, B) <br>
@@ -72,12 +75,14 @@
                     6. &nbsp;&ensp;&ensp;<span>end if</span> <br>
                 </p>
                 <p>
-                    Rozwiązanie iteracyjne składa się z następujących kroków: <br>
-                    <ol>
-                        <li>Przenieś najmniejszy krążek na kolejny słupek.</li>
-                        <li>Wykonaj jedyny możliwy do wykonania ruch, nie zmieniając położenia krążka najmniejszego.</li>
-                        <li>Powtarzaj punkty 1 i 2, aż do odpowiedniego ułożenia wszystkich krążków.</li>
-                    </ol>
+                    <span class=".bold">Rozwiązanie iteracyjne</span>  składa się z następujących kroków: <br>
+                </p>
+                <ol>
+                    <li>Przenieś najmniejszy krążek na kolejny słupek.</li>
+                    <li>Wykonaj jedyny możliwy do wykonania ruch, nie zmieniając położenia krążka najmniejszego.</li>
+                    <li>Powtarzaj punkty 1 i 2, aż do odpowiedniego ułożenia wszystkich krążków.</li>
+                </ol>
+                <p>
                     Kolejny słupek wyznaczamy w zależności od liczby krążków. Jeśli liczba krążków jest parzysta, 
                     kolejnym słupkiem jest ten po prawej stronie (gdy dojdziemy do słupka C w następnym ruchu używamy słupka A). 
                     Natomiast jeśli liczba krążków jest nieparzysta, kolejnym słupkiem jest ten po lewej stronie (gdy dojdziemy do słupka A w następnym ruchu używamy słupka C).
@@ -85,14 +90,14 @@
                 <p>
                     Najmniejsza liczba ruchów wymaganych do rozwiązania problemu wynosi <span>2 <sup>n</sup> - 1</span>. <br>
                 </p>
-            </section>
+            </div>
         </article>
 
         <article id="gameContainer" class="content-container invisible">
             <div style="display:none;">
-                <img id="source" src="./img/board.png" width="720" height="400">
+                <img id="source" src="./img/board.png" width="720" height="400" alt="Smiley face">
             </div> 
-            <span>Przenieś wszystkie krążki na środkowy lub ostatni słupek.</span> <br>
+            <h3><span>Przenieś wszystkie krążki na środkowy lub ostatni słupek.</span></h3> <br>
             <canvas id="gameCanvas" width="720" height="400"></canvas> <br>
             <div class="game-tools">
                 <select id="numberOfBlocks" class="select-nob">
@@ -104,7 +109,7 @@
                     <option value="8">8</option>
                     <option value="9">9</option>
                 </select> 
-                <div class="reset-button" onclick="resetBoard()"> &#x21bb </div>
+                <div class="reset-button" onclick="resetBoard()"> &#x21bb; </div>
             </div>
         </article>
 
