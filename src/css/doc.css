@@ -1,0 +1,19 @@
+html, body {
+    margin: 20px 40px 20px 40px;
+    text-align: justify;
+    background-color: #222930;
+    color: #ddd;
+    font-family: 'McLaren', cursive;
+}
+
+li {
+    list-style-type: none;
+}
+
+h1, h3 {
+    color: #ebc934;
+}
+
+h1 {
+    text-align: center;
+}

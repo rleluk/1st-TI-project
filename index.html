@@ -48,6 +48,9 @@
                     Mimo swojego wieku łamigłówka jest stale tematem prac matematyków i znane są jej bardziej rozbudowane wersje np. z więcej niż trzema słupkami.
                     W psychologii łamigłówka ta jest jednym z testów na kojarzenie.
                 </p>
+                <div id="doc">
+                    <a href="./doc.html" >Dokumentacja projektu</a>
+                </div>
             </div>
         </article>
 
@@ -91,6 +94,9 @@
                 <p>
                     Najmniejsza liczba ruchów wymaganych do rozwiązania problemu wynosi <span>2 <sup>n</sup> - 1</span>. <br>
                 </p>
+                <video width="320" height="240" controls>
+                    <source src="./video/hanoi.mp4" type="video/mp4">
+                </video>
             </div>
         </article>
 
@@ -101,6 +107,7 @@
             <h3><span>Przenieś wszystkie krążki na środkowy lub ostatni słupek.</span></h3> <br>
             <canvas id="gameCanvas" width="720" height="400"></canvas> <br>
             <div class="game-tools">
+                Wybierz ilość krążków: <br> <br>
                 <select id="numberOfBlocks" class="select-nob">
                     <option value="3">3</option>
                     <option value="4">4</option>
@@ -110,7 +117,7 @@
                     <option value="8">8</option>
                     <option value="9">9</option>
                 </select> 
-                <div class="reset-button" onclick="resetBoard()"> &#x21bb; </div>
+                <div class="reset-button" onclick="resetBoard()"> &#x21bb;</div>
             </div>
         </article>
 

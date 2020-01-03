@@ -13,9 +13,9 @@ article {
     font-size: 20px;
     margin: 0 auto;
     width: 70%;
-    min-height: calc(100% - 200px);
+    min-height: calc(100% - 160px);
     background-image: linear-gradient(180deg, #803e00, #871101);
-    padding-top: 150px;
+    padding-top: 110px;
     box-shadow: 0 0 8px #000;
 }
 
@@ -156,4 +156,24 @@ span {
 
 .center {
     text-align: center;
+}
+
+video {
+    display: block;
+    margin: auto;
+}
+
+#doc {
+    margin-top: 50px;
+    display: block;
+    text-align: center;
+}
+
+#doc a {
+    text-decoration: none;
+    color: #ebc934;
+}
+
+#doc a:hover {
+    color: #ebcebc;
 }
